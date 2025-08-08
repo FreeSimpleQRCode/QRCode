@@ -1,63 +1,322 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta name="description" content="Free QR Code Generator - Create and download QR codes instantly."/>
-  <meta name="keywords" content="QR code generator, free QR codes, create QR code, download QR code">
-  <meta name="author" content="QRQuick">
-  <meta property="og:title" content="QRQuick - Free QR Code Generator"/>
-  <meta property="og:description" content="Create and download QR codes instantly. No sign-up required."/>
-  <meta property="og:image" content="preview.jpg"/>
-  <meta name="twitter:card" content="summary_large_image"/>
-  <title>QRQuick | Free QR Code Generator</title>
-  <link rel="icon" href="favicon.ico"/>
-  <link rel="stylesheet" href="style.css"/>
-  <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>QRQuick — Free QR Code Generator</title>
+  <meta name="description" content="QRQuick — Create beautiful QR codes for URLs, text and WiFi. Custom colors, sizes and formats. No sign-up. Download PNG & SVG." />
+  <meta name="keywords" content="qr code generator, free qr code, create qr code, download qr code, qrquick" />
+  <meta name="author" content="QRQuick" />
+
+  <!-- Open Graph (for social previews) -->
+  <meta property="og:title" content="QRQuick — Free QR Code Generator" />
+  <meta property="og:description" content="Create beautiful QR codes online — PNG & SVG, custom colors and sizes. No signup." />
+  <meta property="og:image" content="preview.jpg" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://yourdomain.com" />
+
+  <link rel="icon" href="favicon.ico" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Google Analytics placeholder (replace G-XXXX with your ID) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXX');
+  </script>
+
+  <!-- AdSense placeholder (replace ca-pub-XXXX with your publisher ID) -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX"
+     crossorigin="anonymous"></script>
 </head>
 <body>
-  <header>
-    <h1>QRQuick</h1>
-    <p>Instant Free QR Code Generator</p>
+  <header class="site-header">
+    <div class="wrap">
+      <div class="brand">
+        <div class="logo-mark">QR</div>
+        <div>
+          <h1>QRQuick</h1>
+          <div class="tag">Fast • Beautiful • Free</div>
+        </div>
+      </div>
+      <nav class="top-nav">
+        <a href="#features">Features</a>
+        <a href="blog.html">Blog</a>
+        <a href="privacy.html">Privacy</a>
+      </nav>
+    </div>
   </header>
+
   <main>
     <section class="hero">
-      <h2>Create QR Codes for URLs, WiFi, Text & More</h2>
-      <input type="text" id="qrInput" placeholder="Enter your data here" />
-      <button onclick="generateQR()">Generate</button>
+      <div class="wrap hero-grid">
+        <div class="hero-left">
+          <h2>Create professional QR codes in seconds</h2>
+          <p>Custom colors, sizes, PNG or SVG — download instantly. No accounts, no watermarks.</p>
+
+          <div class="cta-row">
+            <a class="btn btn-primary" href="#generator">Generate a QR Code</a>
+            <a class="btn btn-outline" href="blog.html">Learn how to use QR codes</a>
+          </div>
+
+          <ul class="benefits">
+            <li>✔ Works on desktop & mobile</li>
+            <li>✔ SEO-friendly, fast-loading</li>
+            <li>✔ Monetization-ready (Ad slots + affiliates)</li>
+          </ul>
+        </div>
+
+        <div id="generator" class="hero-right card">
+          <h3>QR Code Generator</h3>
+
+          <label class="label">Data (URL or text)</label>
+          <input id="dataInput" placeholder="https://yourlink.com or any text" autofocus>
+
+          <div class="controls-row">
+            <div class="control">
+              <label>Size</label>
+              <select id="sizeSelect">
+                <option value="200">200×200</option>
+                <option value="300" selected>300×300</option>
+                <option value="500">500×500</option>
+                <option value="800">800×800</option>
+              </select>
+            </div>
+
+            <div class="control">
+              <label>Format</label>
+              <select id="formatSelect">
+                <option value="png" selected>PNG</option>
+                <option value="svg">SVG</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="controls-row">
+            <div class="control">
+              <label>Foreground</label>
+              <input id="fgColor" type="color" value="#000000">
+            </div>
+            <div class="control">
+              <label>Background</label>
+              <input id="bgColor" type="color" value="#ffffff">
+            </div>
+          </div>
+
+          <div class="controls-row small">
+            <div class="control">
+              <label>Margin (quiet zone)</label>
+              <input id="margin" type="number" min="0" max="20" value="4">
+            </div>
+            <div class="control">
+              <label>ECC</label>
+              <select id="ecc">
+                <option value="L">L — Low</option>
+                <option value="M" selected>M — Medium</option>
+                <option value="Q">Q — Quartile</option>
+                <option value="H">H — High</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="actions">
+            <button id="generateBtn" class="btn btn-primary">Preview</button>
+            <button id="downloadBtn" class="btn btn-download" disabled>Download</button>
+            <button id="clearBtn" class="btn btn-ghost">Clear</button>
+          </div>
+
+          <div class="preview-wrap">
+            <div id="preview" class="preview">
+              <div class="preview-empty">Preview will appear here</div>
+            </div>
+          </div>
+
+          <div class="small-note">Tip: use SVG for crisp printing and PNG for web use.</div>
+        </div>
+      </div>
     </section>
-    <div id="qrcode" class="qrcode-box"></div>
-    <button id="downloadBtn" onclick="downloadQR()">Download QR</button>
+
+    <section id="features" class="wrap features-grid">
+      <div class="feature card">
+        <h4>High Quality</h4>
+        <p>Export to large sizes and SVG for print-ready QR codes.</p>
+      </div>
+      <div class="feature card">
+        <h4>Custom Colors</h4>
+        <p>Match your brand by choosing foreground and background colors.</p>
+      </div>
+      <div class="feature card">
+        <h4>Privacy Respecting</h4>
+        <p>No login required — you control the data you turn into a QR code.</p>
+      </div>
+    </section>
+
+    <section class="wrap blog-preview card">
+      <h3>From the blog</h3>
+      <article>
+        <h4>How QR Codes Boost Small Business Sales</h4>
+        <p>Small changes—like adding a QR code to your receipts or flyers—can increase conversions by making actions frictionless. <a href="blog.html">Read more →</a></p>
+      </article>
+    </section>
+
+    <!-- Ad placeholder -->
+    <section class="wrap ads card">
+      <div class="ad">Ad slot (place AdSense code here)</div>
+    </section>
+
   </main>
-  <footer>
-    <p>© 2025 QRQuick | <a href="privacy.html">Privacy</a> | <a href="terms.html">Terms</a> | <a href="contact.html">Contact</a></p>
-    <div class="ads">Ad space for Google AdSense</div>
+
+  <footer class="site-footer">
+    <div class="wrap footer-grid">
+      <div>
+        <strong>QRQuick</strong><br>
+        Fast, beautiful QR codes.
+      </div>
+      <div>
+        <a href="privacy.html">Privacy</a><br>
+        <a href="terms.html">Terms</a><br>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div>
+        <small>© 2025 QRQuick</small>
+      </div>
+    </div>
   </footer>
+
+  <!-- Scripts -->
   <script>
-    let qr;
-    function generateQR() {
-      const container = document.getElementById('qrcode');
-      container.innerHTML = '';
-      const input = document.getElementById('qrInput').value;
-      if (!input.trim()) return alert("Please enter something!");
-      qr = new QRCode(container, {
-        text: input,
-        width: 256,
-        height: 256,
-        colorDark: "#000",
-        colorLight: "#fff",
-        correctLevel: QRCode.CorrectLevel.H
-      });
-      document.getElementById("downloadBtn").style.display = "inline-block";
+    // Build QR image via api.qrserver.com (no server needed)
+    const el = {
+      dataInput: document.getElementById('dataInput'),
+      sizeSelect: document.getElementById('sizeSelect'),
+      formatSelect: document.getElementById('formatSelect'),
+      fgColor: document.getElementById('fgColor'),
+      bgColor: document.getElementById('bgColor'),
+      margin: document.getElementById('margin'),
+      ecc: document.getElementById('ecc'),
+      generateBtn: document.getElementById('generateBtn'),
+      downloadBtn: document.getElementById('downloadBtn'),
+      preview: document.getElementById('preview'),
+      clearBtn: document.getElementById('clearBtn')
+    };
+
+    function buildQRUrl({data, size, color, bgcolor, format, margin, ecc}) {
+      // api.qrserver.com supports various params including color, bgcolor, margin, qzone (quiet zone) as 'margin' or 'qzone'
+      const params = new URLSearchParams();
+      params.set('data', data);
+      params.set('size', `${size}x${size}`);
+      if (format && format.toLowerCase() === 'svg') {
+        params.set('format', 'svg');
+      }
+      // color params accepted like color=000000 & bg=ffffff (api uses color and bgcolor)
+      if (color) params.set('color', color.replace('#',''));
+      if (bgcolor) params.set('bgcolor', bgcolor.replace('#',''));
+      if (margin !== undefined) params.set('margin', margin);
+      // error correction level param is named ecc in qrserver
+      if (ecc) params.set('ecc', ecc);
+      return `https://api.qrserver.com/v1/create-qr-code/?${params.toString()}`;
     }
-    function downloadQR() {
-      const img = document.querySelector('#qrcode img');
-      if (!img) return alert("Generate a QR code first");
-      const link = document.createElement('a');
-      link.href = img.src;
-      link.download = "qr-code.png";
-      link.click();
+
+    function setPreview(imgUrl, isSvg) {
+      el.preview.innerHTML = '';
+      if (isSvg) {
+        // fetch svg and inline it for crisp display & easier download
+        fetch(imgUrl)
+          .then(r => r.text())
+          .then(svgText => {
+            const wrapper = document.createElement('div');
+            wrapper.className = 'svg-wrap';
+            wrapper.innerHTML = svgText;
+            el.preview.appendChild(wrapper);
+            el.downloadBtn.disabled = false;
+            el.downloadBtn.dataset.url = imgUrl;
+            el.downloadBtn.dataset.format = 'svg';
+          })
+          .catch(()=> {
+            el.preview.innerHTML = '<div class="error">Preview failed</div>';
+          });
+      } else {
+        const img = document.createElement('img');
+        img.alt = "QR Code preview";
+        img.src = imgUrl;
+        img.onload = () => {
+          el.preview.innerHTML = '';
+          el.preview.appendChild(img);
+          el.downloadBtn.disabled = false;
+          el.downloadBtn.dataset.url = imgUrl;
+          el.downloadBtn.dataset.format = 'png';
+        };
+        img.onerror = () => {
+          el.preview.innerHTML = '<div class="error">Preview failed</div>';
+        };
+      }
     }
+
+    el.generateBtn.addEventListener('click', () => {
+      const data = (el.dataInput.value || '').trim();
+      if (!data) {
+        alert('Enter a URL or text to create the QR code.');
+        el.dataInput.focus();
+        return;
+      }
+      const size = el.sizeSelect.value;
+      const format = el.formatSelect.value;
+      const color = el.fgColor.value;
+      const bgcolor = el.bgColor.value;
+      const margin = el.margin.value;
+      const ecc = el.ecc.value;
+
+      const url = buildQRUrl({data, size, color, bgcolor, format, margin, ecc});
+      setPreview(url, format === 'svg');
+    });
+
+    el.downloadBtn.addEventListener('click', () => {
+      const url = el.downloadBtn.dataset.url;
+      const fmt = el.downloadBtn.dataset.format;
+      if (!url) return;
+      // Force download by creating an <a download> link
+      const a = document.createElement('a');
+      // If svg -> fetch text and download as blob
+      if (fmt === 'svg') {
+        fetch(url).then(r => r.blob()).then(blob => {
+          const blobUrl = URL.createObjectURL(blob);
+          a.href = blobUrl;
+          a.download = 'qr-code.svg';
+          document.body.appendChild(a);
+          a.click();
+          a.remove();
+          URL.revokeObjectURL(blobUrl);
+        });
+      } else {
+        // For PNG, we can directly download the image URL
+        a.href = url;
+        a.download = 'qr-code.png';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+      }
+    });
+
+    el.clearBtn.addEventListener('click', () => {
+      el.dataInput.value = '';
+      el.preview.innerHTML = '<div class="preview-empty">Preview will appear here</div>';
+      el.downloadBtn.disabled = true;
+    });
+
+    // Nice UX: Enter to generate
+    el.dataInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        el.generateBtn.click();
+      }
+    });
   </script>
 </body>
 </html>
